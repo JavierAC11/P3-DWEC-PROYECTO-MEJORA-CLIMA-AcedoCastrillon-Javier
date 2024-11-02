@@ -3,9 +3,15 @@
 const container = document.querySelector('.container');
 const form = document.querySelector('#formulario');
 const res = document.querySelector('#resultado');
+const localStorage = window.localStorage;
 //const btn = document.querySelector('input[type="submit"][value="Obtener Clima"]');
 
 window.addEventListener('load', () => {
+    const clima = localStorage.getItem("clima");
+    if (clima) {
+        console.log(JSON.parse(clima));
+        mostrarClima(JSON.parse(clima));
+    }
     console.log("Página cargada");
     form.addEventListener('submit', (e)=> 
         obtenerClima(e)
@@ -41,7 +47,7 @@ function consultarAPI(ciudad, pais) {
                 mostrarError("Ciudad no encontrada");
                 return;
             }
-            console.log(data)
+            localStorage.setItem("clima", JSON.stringify(data));
             mostrarClima(data);
         })
 }
